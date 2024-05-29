@@ -28,9 +28,9 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Información personal'),
-        backgroundColor: const Color.fromRGBO(0, 122, 255, 1.0), // Color RGB (Azul)
-      ),
-      body: Center(
+        backgroundColor: const Color.fromRGBO(0, 122, 255, 1.0)
+        ),
+        body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
