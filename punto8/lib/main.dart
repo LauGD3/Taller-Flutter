@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 
+////////////////////////////////////////////////
 void main(List<String> args) {
-  runApp(const Principal());
+  runApp(Principal());
 }
 
+////////////////////////////////////////////////
+final txtNombre = TextEditingController();
+final txtDescripcion = TextEditingController();
+final txtFechaLanz = TextEditingController();
+final txtUbicacion = TextEditingController();
+final txtFotografia = TextEditingController();
+final txtColor = TextEditingController();
+
+////////////////////////////////////////////////
 class Principal extends StatelessWidget {
   const Principal({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'sena ceet', 
-      home: HomePrincipal(),
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      );
+      title: "SENA | CEET",
+      home: HomePrincipal(),
+    );
   }
 }
 
+////////////////////////////////////////////////
 class HomePrincipal extends StatefulWidget {
   const HomePrincipal({super.key});
 
@@ -28,60 +39,134 @@ class _HomePrincipalState extends State<HomePrincipal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sitios turísticos'),
-      foregroundColor: Colors.white,
-      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        title: Text("SENA | CEET"),
       ),
       body: ListView.builder(
         itemCount: sitiosTuristicos.length,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            trailing: const Icon(Icons.arrow_circle_right_outlined),
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(sitiosTuristicos[index]['foto_monumento']),
+              backgroundImage:
+                  NetworkImage(sitiosTuristicos[index]['foto_monumento']),
             ),
             title: Text(sitiosTuristicos[index]['nombre']),
-            subtitle: Text(sitiosTuristicos[index]['ubicacion'] + 
-              "" +
-              sitiosTuristicos[index]['fecha_lanzamiento']
-            ),
+            subtitle: Text(sitiosTuristicos[index]['ubicacion']),
+            trailing: Icon(Icons.arrow_circle_right_sharp),
             onTap: () {
               showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) {
+                    return Scaffold(
+                      appBar: AppBar(
+                        backgroundColor: sitiosTuristicos[index]
+                            ['color_distintivo'],
+                        title: Text(sitiosTuristicos[index]['nombre']),
+                      ),
+                      body: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ListView(
+                          children: [
+                            CircleAvatar(
+                              radius: 100,
+                              backgroundImage: NetworkImage(
+                                  sitiosTuristicos[index]['foto_monumento']),
+                            ),
+                            Text(sitiosTuristicos[index]['descripcion']),
+                            Divider(),
+                            Text(sitiosTuristicos[index]['ubicacion']),
+                            Divider(),
+                            Text(sitiosTuristicos[index]['fecha_lanzamiento']),
+                            Divider(),
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+            },
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.green,
+          foregroundColor: Colors.white,
+          child: Icon(Icons.account_circle),
+          onPressed: () {
+            showModalBottomSheet(
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
                   return Scaffold(
                     appBar: AppBar(
-                      backgroundColor: sitiosTuristicos[index]['color_distintivo'],
-                      title: Text(sitiosTuristicos[index]['nombre']),
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                      title: Text("Nuevo Sitio Turístico"),
                     ),
                     body: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: ListView(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
                         children: [
-                          CircleAvatar(
-                            radius: 100,
-                            backgroundImage: NetworkImage(sitiosTuristicos[index]['foto_monumento'])
+                          TextFormField(
+                            controller: txtNombre,
+                            decoration: InputDecoration(
+                                labelText: "Nombre",
+                                hintText: "Nombre del sitio Turístico",
+                                icon: Icon(Icons.file_copy)),
                           ),
-                          Text(sitiosTuristicos[index]['descripcion']),
-                          Divider(),
-                          Text(sitiosTuristicos[index]['ubicacion']),
-                          Divider(),
-                          Text(sitiosTuristicos[index]['fecha_lanzamiento']),
+                          TextFormField(
+                            controller: txtDescripcion,
+                            decoration: InputDecoration(
+                                labelText: "Descripcion",
+                                hintText: "Descripcion del sitio Turístico",
+                                icon: Icon(Icons.file_copy)),
+                          ),
+                          TextFormField(
+                            controller: txtFechaLanz,
+                            decoration: InputDecoration(
+                                labelText: "Fecha Lanzamiento",
+                                hintText:
+                                    "Fecha Lanzamiento del sitio Turístico",
+                                icon: Icon(Icons.file_copy)),
+                          ),
+                          TextFormField(
+                            controller: txtUbicacion,
+                            decoration: InputDecoration(
+                                labelText: "Ubicación",
+                                hintText: "Ubicación del sitio Turístico",
+                                icon: Icon(Icons.file_copy)),
+                          ),
+                          TextFormField(
+                            controller: txtFotografia,
+                            decoration: InputDecoration(
+                                labelText: "Fotografía",
+                                hintText: "Fotografia del sitio Turístico",
+                                icon: Icon(Icons.file_copy)),
+                          ),
+                          TextFormField(
+                            controller: txtColor,
+                            decoration: InputDecoration(
+                                labelText: "Color",
+                                hintText: "Color del sitio Turístico",
+                                icon: Icon(Icons.file_copy)),
+                          ),
                         ],
                       ),
                     ),
+                    floatingActionButton: FloatingActionButton(
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                      child: Icon(Icons.save),
+                      onPressed: () {},
+                    ),
                   );
-                },
-              );
-            },
-          );
-        },
-      ),
+                });
+          }),
     );
   }
 }
-
 List<Map<String, dynamic>> sitiosTuristicos = [
   {
     'nombre': 'La Gran Muralla China',
