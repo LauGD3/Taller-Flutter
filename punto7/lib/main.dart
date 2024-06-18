@@ -33,17 +33,17 @@ class _HomePrincipalState extends State<HomePrincipal> {
       backgroundColor: Colors.black,
       ),
       body: ListView.builder(
-        itemCount: sitiosTuristicos.length,
+        itemCount: aprendices.length,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             trailing: const Icon(Icons.arrow_circle_right_outlined),
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(sitiosTuristicos[index]['foto_monumento']),
+              backgroundImage: NetworkImage(aprendices[index]['foto_monumento']),
             ),
-            title: Text(sitiosTuristicos[index]['nombre']),
-            subtitle: Text(sitiosTuristicos[index]['ubicacion'] + 
+            title: Text(aprendices[index]['nombre']),
+            subtitle: Text(aprendices[index]['ubicacion'] + 
               "" +
-              sitiosTuristicos[index]['fecha_lanzamiento']
+              aprendices[index]['fecha_lanzamiento']
             ),
             onTap: () {
               showModalBottomSheet(
@@ -52,8 +52,8 @@ class _HomePrincipalState extends State<HomePrincipal> {
                 builder: (context) {
                   return Scaffold(
                     appBar: AppBar(
-                      backgroundColor: sitiosTuristicos[index]['color_distintivo'],
-                      title: Text(sitiosTuristicos[index]['nombre']),
+                      backgroundColor: aprendices[index]['color_distintivo'],
+                      title: Text(aprendices[index]['nombre']),
                     ),
                     body: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -61,13 +61,13 @@ class _HomePrincipalState extends State<HomePrincipal> {
                         children: [
                           CircleAvatar(
                             radius: 100,
-                            backgroundImage: NetworkImage(sitiosTuristicos[index]['foto_monumento'])
+                            backgroundImage: NetworkImage(aprendices[index]['foto_monumento'])
                           ),
-                          Text(sitiosTuristicos[index]['descripcion']),
+                          Text(aprendices[index]['descripcion']),
                           Divider(),
-                          Text(sitiosTuristicos[index]['ubicacion']),
+                          Text(aprendices[index]['ubicacion']),
                           Divider(),
-                          Text(sitiosTuristicos[index]['fecha_lanzamiento']),
+                          Text(aprendices[index]['fecha_lanzamiento']),
                         ],
                       ),
                     ),
@@ -82,7 +82,7 @@ class _HomePrincipalState extends State<HomePrincipal> {
   }
 }
 
-List<Map<String, dynamic>> sitiosTuristicos = [
+List<Map<String, dynamic>> aprendices = [
   {
     'nombre': 'La Gran Muralla China',
     'descripcion':

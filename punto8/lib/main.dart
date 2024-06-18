@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 
-////////////////////////////////////////////////
 void main(List<String> args) {
   runApp(Principal());
 }
 
-////////////////////////////////////////////////
-final txtNombre = TextEditingController();
-final txtDescripcion = TextEditingController();
-final txtFechaLanz = TextEditingController();
-final txtUbicacion = TextEditingController();
-final txtFotografia = TextEditingController();
-final txtColor = TextEditingController();
+final txtPrimerNombre = TextEditingController();
+final txtSegundoNombre = TextEditingController();
+final txtPrimerApellido = TextEditingController();
+final txtSegundoApellido = TextEditingController();
 
-////////////////////////////////////////////////
 class Principal extends StatelessWidget {
   const Principal({super.key});
 
@@ -27,7 +22,6 @@ class Principal extends StatelessWidget {
   }
 }
 
-////////////////////////////////////////////////
 class HomePrincipal extends StatefulWidget {
   const HomePrincipal({super.key});
 
@@ -40,236 +34,254 @@ class _HomePrincipalState extends State<HomePrincipal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.green,
         foregroundColor: Colors.white,
         title: Text("SENA | CEET"),
       ),
       body: ListView.builder(
-        itemCount: sitiosTuristicos.length,
+        itemCount: aprendices.length,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             leading: CircleAvatar(
-              backgroundImage:
-                  NetworkImage(sitiosTuristicos[index]['foto_monumento']),
+              child: Text(
+                aprendices[index]['nombre']!.split(' ').map((e) => e[0]).take(2).join(),
+              ),
             ),
-            title: Text(sitiosTuristicos[index]['nombre']),
-            subtitle: Text(sitiosTuristicos[index]['ubicacion']),
+            title: Text(aprendices[index]['nombre']!),
+            subtitle: Text("Aprendiz"),
             trailing: Icon(Icons.arrow_circle_right_sharp),
             onTap: () {
               showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (context) {
-                    return Scaffold(
-                      appBar: AppBar(
-                        backgroundColor: sitiosTuristicos[index]
-                            ['color_distintivo'],
-                        title: Text(sitiosTuristicos[index]['nombre']),
-                      ),
-                      body: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: ListView(
-                          children: [
-                            CircleAvatar(
-                              radius: 100,
-                              backgroundImage: NetworkImage(
-                                  sitiosTuristicos[index]['foto_monumento']),
-                            ),
-                            Text(sitiosTuristicos[index]['descripcion']),
-                            Divider(),
-                            Text(sitiosTuristicos[index]['ubicacion']),
-                            Divider(),
-                            Text(sitiosTuristicos[index]['fecha_lanzamiento']),
-                            Divider(),
-                          ],
-                        ),
-                      ),
-                    );
-                  });
-            },
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.green,
-          foregroundColor: Colors.white,
-          child: Icon(Icons.account_circle),
-          onPressed: () {
-            showModalBottomSheet(
                 isScrollControlled: true,
                 context: context,
                 builder: (context) {
                   return Scaffold(
                     appBar: AppBar(
                       backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      title: Text("Nuevo Sitio Turístico"),
+                      title: Text(aprendices[index]['nombre']!),
                     ),
                     body: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ListView(
                         children: [
-                          TextFormField(
-                            controller: txtNombre,
-                            decoration: InputDecoration(
-                                labelText: "Nombre",
-                                hintText: "Nombre del sitio Turístico",
-                                icon: Icon(Icons.file_copy)),
-                          ),
-                          TextFormField(
-                            controller: txtDescripcion,
-                            decoration: InputDecoration(
-                                labelText: "Descripcion",
-                                hintText: "Descripcion del sitio Turístico",
-                                icon: Icon(Icons.file_copy)),
-                          ),
-                          TextFormField(
-                            controller: txtFechaLanz,
-                            decoration: InputDecoration(
-                                labelText: "Fecha Lanzamiento",
-                                hintText:
-                                    "Fecha Lanzamiento del sitio Turístico",
-                                icon: Icon(Icons.file_copy)),
-                          ),
-                          TextFormField(
-                            controller: txtUbicacion,
-                            decoration: InputDecoration(
-                                labelText: "Ubicación",
-                                hintText: "Ubicación del sitio Turístico",
-                                icon: Icon(Icons.file_copy)),
-                          ),
-                          TextFormField(
-                            controller: txtFotografia,
-                            decoration: InputDecoration(
-                                labelText: "Fotografía",
-                                hintText: "Fotografia del sitio Turístico",
-                                icon: Icon(Icons.file_copy)),
-                          ),
-                          TextFormField(
-                            controller: txtColor,
-                            decoration: InputDecoration(
-                                labelText: "Color",
-                                hintText: "Color del sitio Turístico",
-                                icon: Icon(Icons.file_copy)),
-                          ),
+                          Text("Nombre: ${aprendices[index]['nombre']}"),
+                          Divider(),
+                          Text("Ocupación: ${aprendices[index]['ocupacion']}"),
+                          Divider(),
+                          Text("Descripción: ${aprendices[index]['descripcion']}"),
                         ],
                       ),
                     ),
-                    floatingActionButton: FloatingActionButton(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      child: Icon(Icons.save),
-                      onPressed: () {},
-                    ),
                   );
-                });
-          }),
+                },
+              );
+            },
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        child: Icon(Icons.account_circle),
+        onPressed: () {
+          showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (context) {
+              return Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                  title: Text("Nuevo Aprendiz"),
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: txtPrimerNombre,
+                        decoration: InputDecoration(
+                          labelText: "Primer Nombre",
+                          hintText: "Primer nombre del aprendiz",
+                          icon: Icon(Icons.person),
+                        ),
+                      ),
+                      TextFormField(
+                        controller: txtSegundoNombre,
+                        decoration: InputDecoration(
+                          labelText: "Segundo Nombre",
+                          hintText: "Segundo nombre del aprendiz",
+                          icon: Icon(Icons.person),
+                        ),
+                      ),
+                      TextFormField(
+                        controller: txtPrimerApellido,
+                        decoration: InputDecoration(
+                          labelText: "Primer Apellido",
+                          hintText: "Primer apellido del aprendiz",
+                          icon: Icon(Icons.person),
+                        ),
+                      ),
+                      TextFormField(
+                        controller: txtSegundoApellido,
+                        decoration: InputDecoration(
+                          labelText: "Segundo Apellido",
+                          hintText: "Segundo apellido del aprendiz",
+                          icon: Icon(Icons.person),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                floatingActionButton: FloatingActionButton(
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                  child: Icon(Icons.save),
+                  onPressed: () {
+                    setState(() {
+                      String nombre = "${txtPrimerNombre.text} ${txtSegundoNombre.text} ${txtPrimerApellido.text} ${txtSegundoApellido.text}";
+                      aprendices.add({
+                        'nombre': nombre,
+                        'ocupacion': 'Aprendiz',
+                        'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+                      });
+                      txtPrimerNombre.clear();
+                      txtSegundoNombre.clear();
+                      txtPrimerApellido.clear();
+                      txtSegundoApellido.clear();
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
-List<Map<String, dynamic>> sitiosTuristicos = [
+
+List<Map<String, String>> aprendices = [
   {
-    'nombre': 'La Gran Muralla China',
-    'descripcion':
-        'La Gran Muralla China es una antigua fortificación china construida para proteger el imperio chino de las invasiones de los pueblos nómadas del norte.',
-    'ubicacion': 'China',
-    'fecha_lanzamiento': 'Siglo VII a.C.',
-    'generacion': 'Antiguo',
-    'color_distintivo': Colors.red,
-    'foto_monumento':
-        'https://source.unsplash.com/featured/?Great%20Wall%20of%20China'
+    'nombre': 'DANIEL FELIPE ROMERO MORENO',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
   },
   {
-    'nombre': 'Torre Eiffel',
-    'descripcion':
-        'La Torre Eiffel es una torre de hierro ubicada en el Campo de Marte, en París. Es uno de los símbolos más reconocidos de Francia y del mundo.',
-    'ubicacion': 'París, Francia',
-    'fecha_lanzamiento': '31 de marzo de 1889',
-    'generacion': 'Moderno',
-    'color_distintivo': Colors.blue,
-    'foto_monumento': 'https://source.unsplash.com/featured/?Eiffel%20Tower'
+    'nombre': 'DANIEL FELIPE NAVARRETE SANCHEZ',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
   },
   {
-    'nombre': 'Machu Picchu',
-    'descripcion':
-        'Machu Picchu es una antigua ciudad inca ubicada en los Andes peruanos. Es uno de los destinos turísticos más populares del mundo debido a su impresionante arquitectura y paisajes.',
-    'ubicacion': 'Cuzco, Perú',
-    'fecha_lanzamiento': 'Siglo XV',
-    'generacion': 'Antiguo',
-    'color_distintivo': Colors.green,
-    'foto_monumento': 'https://source.unsplash.com/featured/?Machu%20Picchu'
+    'nombre': 'HAROLD ESTEBAN GAONA ROJAS',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
   },
   {
-    'nombre': 'Pirámides de Giza',
-    'descripcion':
-        'Las Pirámides de Giza son una de las siete maravillas del mundo antiguo y uno de los sitios turísticos más famosos del planeta. Están ubicadas en las afueras de El Cairo, Egipto.',
-    'ubicacion': 'El Cairo, Egipto',
-    'fecha_lanzamiento': 'Siglo XXVI a.C.',
-    'generacion': 'Antiguo',
-    'color_distintivo': Colors.yellow,
-    'foto_monumento':
-        'https://source.unsplash.com/featured/?Pyramids%20of%20Giza'
+    'nombre': 'EDUARDO ANTONIO BALZA PEÑA',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
   },
   {
-    'nombre': 'Gran Cañón',
-    'descripcion':
-        'El Gran Cañón es un impresionante cañón tallado por el río Colorado en el estado de Arizona. Es uno de los destinos turísticos más visitados de los Estados Unidos.',
-    'ubicacion': 'Arizona, Estados Unidos',
-    'fecha_lanzamiento': 'Siglo XVIII',
-    'generacion': 'Antiguo',
-    'color_distintivo': Colors.orange,
-    'foto_monumento': 'https://source.unsplash.com/featured/?Grand%20Canyon'
+    'nombre': 'ESTEBAN DAVID CARDENAS PEREZ',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
   },
   {
-    'nombre': 'Gran Barrera de Coral',
-    'descripcion':
-        'La Gran Barrera de Coral es el sistema de arrecifes de coral más grande del mundo. Se encuentra frente a la costa de Queensland, Australia, y es uno de los destinos de buceo más populares del mundo.',
-    'ubicacion': 'Queensland, Australia',
-    'fecha_lanzamiento': 'Siglo XVII',
-    'generacion': 'Antiguo',
-    'color_distintivo': Colors.cyan,
-    'foto_monumento':
-        'https://source.unsplash.com/featured/?Great%20Barrier%20Reef'
+    'nombre': 'JOSUE DAVID MALDONADO GOMEZ',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
   },
   {
-    'nombre': 'Ciudad Prohibida',
-    'descripcion':
-        'La Ciudad Prohibida es un complejo de palacios imperiales ubicado en el centro de Pekín. Fue la residencia oficial de los emperadores chinos durante casi 500 años.',
-    'ubicacion': 'Pekín, China',
-    'fecha_lanzamiento': '1406',
-    'generacion': 'Antiguo',
-    'color_distintivo': Colors.purple,
-    'foto_monumento': 'https://source.unsplash.com/featured/?Forbidden%20City'
+    'nombre': 'NICOLAS ALARCON FONSECA',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
   },
   {
-    'nombre': 'Parque Nacional Yellowstone',
-    'descripcion':
-        'El Parque Nacional Yellowstone es el primer parque nacional del mundo y es famoso por sus geiseres, géiseres de lodo, aguas termales y vida silvestre.',
-    'ubicacion': 'Wyoming, Estados Unidos',
-    'fecha_lanzamiento': '1 de marzo de 1872',
-    'generacion': 'Moderno',
-    'color_distintivo': Colors.brown,
-    'foto_monumento':
-        'https://source.unsplash.com/featured/?Yellowstone%20National%20Park'
+    'nombre': 'LUIS FERNANDO MORALES CAMACHO',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
   },
   {
-    'nombre': 'Isla de Pascua',
-    'descripcion':
-        'La Isla de Pascua es famosa por sus misteriosas estatuas de piedra llamadas moai, que fueron talladas por los antiguos habitantes de la isla. Es un destino turístico único en medio del Pacífico Sur.',
-    'ubicacion': 'Chile',
-    'fecha_lanzamiento': 'Siglo XIII',
-    'generacion': 'Antiguo',
-    'color_distintivo': Colors.teal,
-    'foto_monumento': 'https://source.unsplash.com/featured/?Easter%20Island'
+    'nombre': 'CRISTIAN RAUL GRANADOS VASQUEZ',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
   },
   {
-    'nombre': 'Monte Everest',
-    'descripcion':
-        'El Monte Everest es la montaña más alta del mundo y representa uno de los mayores desafíos para los alpinistas. Es parte de la cordillera del Himalaya, en la frontera entre Nepal y el Tíbet.',
-    'ubicacion': 'Himalaya',
-    'fecha_lanzamiento': '29 de mayo de 1953',
-    'generacion': 'Contemporáneo',
-    'color_distintivo': Colors.deepOrange,
-    'foto_monumento': 'https://source.unsplash.com/featured/?Mount%20Everest'
-  }
+    'nombre': 'LAURA JULIETH SUAREZ LOPEZ',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'DAVID SANTIAGO LUENGAS CAÑON',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'BRAYAM SNEYDER CERQUERA RODRIGUEZ',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'CRISTIAN DAVID MARTINEZ GALINDO',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'NICOLAS ESPITIA CHACON',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'MARIANA GALARZA GONZALEZ',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'LINA MARIA MONROY GAMA',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'DEIVYD SAMIR GARCIA DIAZ',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'CRISTIAN DANIEL ARRIETA ORTEGA',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'LORENA ANJHUL MEDINA YAZO',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'JOHAN SEBASTIAN VELASQUEZ DUQUE',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'SANTIAGO ANDRES TORRES MENESES',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'IVAN EDUARDO OLMOS RAMIREZ',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'ALEXANDER DE JESUS MARRIAGA BARRANCO',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
+  {
+    'nombre': 'DEICY RIVAS CORDOBA',
+    'ocupacion': 'Aprendiz',
+    'descripcion': 'Está al día con las entregas y competencias de aprendizaje',
+  },
 ];
+   
